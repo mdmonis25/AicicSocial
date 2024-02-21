@@ -43,7 +43,7 @@ const LoginScreen = () => {
                 const userData = response.data;
                 if (response.data.result == 1) {
                     console.log("Login Success");
-                    navigation.navigate("HomeScreen");
+                    navigation.navigate("Root");
                     dispatch({ type: "LOGIN", payload: userData });
                     Alert.alert(
                         "Login Success",

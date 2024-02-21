@@ -1,17 +1,17 @@
-import React from 'react';
+import LoginScreen from '../screens/LoginScreen';
 import {NavigationContainer} from '@react-navigation/native';
-import TabNavigator from './TabNavigator';
+import React from 'react';
+import SignUp from '../screens/SignUpScreen';
 import {StatusBar} from 'react-native';
+import TabNavigator from './TabNavigator';
 import TripDetailsScreen from '../screens/TripDetailsScreen';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
-import LoginScreen from '../screens/LoginScreen';
-import SignUp from '../screens/SignUpScreen';
 
 const Stack = createSharedElementStackNavigator();
 
 const MainNavigator = () => {
   return (
-    <NavigationContainer>
+    <>
       <StatusBar hidden />
       <Stack.Navigator>
         <Stack.Screen
@@ -52,7 +52,7 @@ const MainNavigator = () => {
           }}
         />
       </Stack.Navigator>
-    </NavigationContainer>
+    </>
   );
 };
 

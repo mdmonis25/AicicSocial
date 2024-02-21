@@ -1,11 +1,14 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {colors} from '../constants/theme';
+import React, {useContext} from 'react';
+import {SEARCH_ALL, SEARCH_HOTELS, SEARCH_PLACES} from '../data';
+import {StyleSheet, Text, View} from 'react-native';
+
+import { AuthContext } from '../../App';
 import MainHeader from '../components/shared/MainHeader';
 import SearchInput from '../components/Search/SearchInput';
-import Tabs from '../components/shared/Tabs';
 import SearchMasonry from '../components/Search/SearchMasonry';
-import {SEARCH_ALL, SEARCH_HOTELS, SEARCH_PLACES} from '../data';
+import Tabs from '../components/shared/Tabs';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import {colors} from '../constants/theme';
 
 const tabs = [
   {
@@ -23,9 +26,14 @@ const tabs = [
 ];
 
 const SearchScreen = () => {
+
+  const { state, dispatch } = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <MainHeader title="Search" />
+      <TouchableOpacity onPress={() => dispatch({type:"LOG_OUT"})}>
+        <Text style={{color:'red',textAlign:'center'}}>Logout</Text>
+      </TouchableOpacity>
       <SearchInput />
       <Tabs items={tabs} />
     </View>

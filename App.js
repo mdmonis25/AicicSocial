@@ -1,17 +1,13 @@
-
 import { createContext, useEffect, useReducer, useState } from "react";
 
 import { AppState } from "react-native";
-// import { AppStateProvider } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthNavigator from "./src/navigations/AuthNavigator";
-// import Component from "./components/MyComponent";
+import MainNavigator from "./src/navigations/MainNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-// import { NativeBaseProvider } from "native-base";
-import MainNavigator from "./src/navigations/MainNavigator";
-import { useAuth } from "./src/contexts/AuthContext";
-// import { AuthProvider } from "./src/contexts/AuthContext";
+
+// import { useAuth } from "./src/contexts/AuthContext";
 
 const userData = {
   name: "",
@@ -25,23 +21,23 @@ const userData = {
   address: "",
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthReducer = async (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
-        userData: action.payload,
         isSignout: false,
+        userData: action.payload,
       };
-    case "LOGOUT":
-      await AsyncStorage.removeItem("userData");
-      return {
-        ...state,
-        userData: userData,
-        isSignout: true,
-      };
+      case "LOG_OUT":
+        await AsyncStorage.removeItem("userData");
+        return {
+          ...userData, // Reset state to initial values
+          isSignout: true,
+        };
+      
     case "PROFILE_UPDATE":
       return {
         ...state,

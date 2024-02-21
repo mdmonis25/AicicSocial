@@ -1,16 +1,29 @@
-import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Icon from './Icon';
+import React, { useContext } from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {sizes, spacing} from '../../constants/theme';
 
-const MainHeader = ({title}) => {
+import { AuthContext } from '../../../App';
+import Icon from './Icon';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { color } from '@rneui/themed/dist/config';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+const MainHeader = () => {
+  // const [ state,dispatch] = useContext(AuthContext) || {};
+
+  const onLogoutPress = () => {
+    dispatch({type:"LOG_OUT"});
+  }
+
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.container, {marginTop: insets.top}]}>
       <Icon icon="Hamburger" onPress={() => {}} />
-      <Text style={styles.title}>{title}</Text>
-      <Icon icon="Notification" onPress={() => {}} />
+      {/* <TouchableOpacity onPress={onLogoutPress}>
+
+      <Text style={styles.title}>Logout</Text>
+      </TouchableOpacity> */}
+      {/* <Icon icon="Notification" onPress={() => {}} /> */}
     </View>
   );
 };
@@ -25,6 +38,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: sizes.h3,
     fontWeight: 'bold',
+    color: "#7F27FF",
   },
 });
 
