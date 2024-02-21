@@ -1,118 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { createContext, useEffect, useReducer, useState } from "react";
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { AppState } from "react-native";
+// import { AppStateProvider } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthNavigator from "./src/navigations/AuthNavigator";
+// import Component from "./components/MyComponent";
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+// import { NativeBaseProvider } from "native-base";
+import MainNavigator from "./src/navigations/MainNavigator";
+import { useAuth } from "./src/contexts/AuthContext";
+// import { AuthProvider } from "./src/contexts/AuthContext";
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const userData = {
+  name: "",
+  email: "",
+  mobileno: "",
+  isSignout: true,
+  devicetoken: "",
+  token: "",
+  password: "",
+  uid: "",
+  address: "",
+};
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+export const AuthContext = createContext();
+
+export const AuthReducer = async (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return {
+        ...state,
+        userData: action.payload,
+        isSignout: false,
+      };
+    case "LOGOUT":
+      await AsyncStorage.removeItem("userData");
+      return {
+        ...state,
+        userData: userData,
+        isSignout: true,
+      };
+    case "PROFILE_UPDATE":
+      return {
+        ...state,
+        userData: action.payload,
+      }
+    default:
+      return state;
+  }
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+const App = () => {
+  const [appState, setAppState] = useState(AppState.currentState);
+  const [state, dispatch] = useReducer(AuthReducer, userData);
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    <AuthContext.Provider value={{ state, dispatch }}>
+      <NavigationContainer>
+        {!state.isSignout ? <AuthNavigator /> : <MainNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  )
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default App
