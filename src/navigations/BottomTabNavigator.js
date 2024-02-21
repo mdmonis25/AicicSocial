@@ -1,11 +1,12 @@
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import FavoriteScreen from '../screens/FavoriteScreen';
-import Icon from '../components/shared/Icon';
+import {Animated, StyleSheet} from 'react-native';
 import {colors, sizes} from '../constants/theme';
-import {StyleSheet, Animated} from 'react-native';
+
+import FavoriteScreen from '../screens/FavoriteScreen';
 import HomeNavigator from './HomeNavigator';
+import Icon from '../components/shared/Icon';
+import React from 'react';
 import SearchNavigator from './SearchNavigator';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const tabs = [
   {
@@ -24,7 +25,7 @@ const tabs = [
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const BottomTabNavigator = () => {
   const offsetAnimation = React.useRef(new Animated.Value(0)).current;
   return (
     <>
@@ -93,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabNavigator;
+export default BottomTabNavigator;

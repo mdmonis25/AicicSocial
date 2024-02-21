@@ -1,26 +1,21 @@
 import LoginScreen from '../screens/LoginScreen';
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import SignUp from '../screens/SignUpScreen';
 import {StatusBar} from 'react-native';
-import TabNavigator from './TabNavigator';
+import TabNavigator from './BottomTabNavigator';
 import TripDetailsScreen from '../screens/TripDetailsScreen';
-import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const MainNavigator = () => {
   return (
-    <>
-      <StatusBar hidden />
-      <Stack.Navigator>
+    <Stack.Navigator>
         <Stack.Screen
           name="Root"
           component={TabNavigator}
           options={{
             headerShown: false,
-            useNativeDriver: true,
-            gestureEnabled: false,
           }}
         />
         <Stack.Screen
@@ -52,7 +47,7 @@ const MainNavigator = () => {
           }}
         />
       </Stack.Navigator>
-    </>
+    
   );
 };
 

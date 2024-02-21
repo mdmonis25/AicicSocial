@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../App';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import base64 from 'react-native-base64';
@@ -191,7 +191,8 @@ const LoginScreen = () => {
                                     onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                                 >
                                     <Icon
-                                        name={isPasswordVisible ? "eye-off" : "eye"}
+                                        name={
+                                        isPasswordVisible ? "eye-off" : "eye-with-line"}
                                         color='#7F27FF'
                                         size={20}
                                     />
@@ -216,7 +217,8 @@ const LoginScreen = () => {
                             <TouchableOpacity onPress={handleForgotPassword}>
                                 <Text style={styles.forgotPassword}>Forgot Password?</Text>
                             </TouchableOpacity>
-                            {state.isSignout ? (<TouchableOpacity onPress={handleSignup}>
+                            {
+                                !state.isSignout ? (<TouchableOpacity onPress={handleSignup}>
                                 <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
                             </TouchableOpacity>) : null
 
