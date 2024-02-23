@@ -43,10 +43,15 @@ const SearchScreen = () => {
       <Text style={styles.content}>{item.caption}</Text>
 
       {/* Image */}
-      <Image 
-      // source={{ uri: item.postImageUrl }}
+      {/* <Image 
+      source={{ uri: item.postImageUrl }}
        
-      style={styles.postImage} />
+      style={styles.postImage} /> */}
+      <Image 
+  source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }}
+  // style={styles.postImage}
+  onError={() => console.log('Error loading image')}
+/>
 
       {/* Interaction Buttons */}
       <View style={styles.interactionButtons}>
