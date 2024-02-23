@@ -41,7 +41,7 @@ const LoginScreen = () => {
                 if (response.data.result == 1) {
                     console.log("Login Success");
                     dispatch({ type: "LOGIN", payload: userData });
-                    // navigation.navigate('Root', { screen: 'Search' });
+                    navigation.navigate('Root', { screen: 'Search' });
                 } else {
                     Alert.alert("Unable to Login", response.data.message);
                 }

@@ -17,7 +17,7 @@ const tabs = [
     },
   },
   {
-    name: 'Add',
+    name: 'Search',
     screen: Search,
     options: {
       headerShown: false,
@@ -36,7 +36,7 @@ const Root = () => {
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Add"
+        initialRouteName="Search"
         shifting={false}
         screenOptions={{
           headerShown: false,
