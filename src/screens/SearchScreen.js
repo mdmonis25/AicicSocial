@@ -43,8 +43,8 @@ const SearchScreen = () => {
     <View style={styles.card}>
       {/* User Info */}
       <View style={styles.userInfo}>
-        <Image source={{ uri: item.image_url }} style={styles.avatar} />
-        <Text style={styles.username}>{item.username}</Text>
+        <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
+        <Text style={styles.username}>{item.user_name}</Text>
       </View>
 
       {/* Post Content */}
@@ -57,9 +57,10 @@ const SearchScreen = () => {
       style={styles.postImage} /> */}
       <Image 
   source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }}
-  // style={styles.postImage}
-  onError={() => console.log('Error loading image')}
+  style={styles.postImage}
+  onError={(error) => console.log('Error loading image', error)}
 />
+
 
       {/* Interaction Buttons */}
       <View style={styles.interactionButtons}>
@@ -115,8 +116,8 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    marginTop: -20,
+    backgroundColor: '#E5D4FF',
+    marginTop: 0,
   },
   postImage: {
     width: '100%',
@@ -129,11 +130,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 20,
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 18,
+    color: '#7F27FF',
     fontWeight: 'bold',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding : 10
   },
   headerIcons: {
     flexDirection: 'row',
@@ -169,9 +174,13 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
+    fontSize: 16,
+    color: '#7F27FF',
   },
   content: {
     marginTop: 10,
+    fontSize: 16,
+    color: '#000',
   },
   interactionButtons: {
     flexDirection: 'row',

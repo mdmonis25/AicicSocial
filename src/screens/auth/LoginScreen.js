@@ -105,6 +105,12 @@ const LoginScreen = () => {
     }, []);
 
 
+    if(state._j.isSignout === false){
+            return (
+                navigation.navigate('Root', { screen: 'HomePage' })
+            )
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             {
