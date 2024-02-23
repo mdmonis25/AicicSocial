@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Button, Text, useThemeMode } from '@rneui/themed';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useContext, useEffect, useState } from 'react';
+
 import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Entypo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import base64 from 'react-native-base64';
+import socialApi from '../api/socialApi';
 import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
@@ -22,15 +24,16 @@ const LoginScreen = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
 
-    const baseUrl = 'https://guflu.in/Social_media/smedia_api.php'
+    // const baseUrl = 'https://guflu.in/Social_media/smedia_api.php'
 
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await axios.post(baseUrl, {
-                route: 'login',
-                token: base64.encode(`${mobile}:${password}`)
-            });
+           const response = await socialApi.post('/login', {
+               params : {
+                   token : base64.encode(mobile + ":" + password)
+               }
+           })
             console.log("Response Status: ", response.status);
 
             if (response.status === 200) {
