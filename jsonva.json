@@ -1,0 +1,26 @@
+[
+  {
+    "caption": "sadsadas",
+    "created_at": "2024-02-13 16:30:38",
+    "id": "2",
+    "image_url": "sadasd.jpg",
+    "post_id": "2",
+    "user_id": "2"
+  },
+  {
+    "caption": "dfdsfsfs",
+    "created_at": "2024-02-22 17:41:37",
+    "id": "27",
+    "image_url": "/var/www/vhosts/guflu.in/httpdocs/Social_media/upload/1708603897_Screenshot 2024-02-22 140846.png",
+    "post_id": "0",
+    "user_id": "2"
+  },
+  {
+    "caption": "dfdsfsfs",
+    "created_at": "2024-02-22 17:43:42",
+    "id": "28",
+    "image_url": "/var/www/vhosts/guflu.in/httpdocs/Social_media/upload/1708604022_Screenshot 2023-11-30 130138.png",
+    "post_id": "0",
+    "user_id": "2"
+  }
+]
