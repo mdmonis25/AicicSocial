@@ -3,6 +3,7 @@ import { Button, Text } from '@rneui/themed';
 import React, { useContext, useState } from 'react';
 
 import { AuthContext } from '../../../App';
+import Icon from 'react-native-vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -112,31 +113,60 @@ const SignUp = () => {
                             />
                         </View>
                         <View style={styles.inputContainer}>
-                            <Text>Number</Text>
+                            <Text>Mobile</Text>
                             <TextInput
                                 autoCapitalize="none"
                                 autoCorrect={false}
+                                keyboardType="numeric"
                                 style={styles.input}
                                 onChangeText={(text) => setMobile(text)}
                                 value={mobile}
-                                placeholder="Enter your number"
+                                placeholder="Enter your mobile number"
                                 placeholderTextColor="#7F27FF"
                             />
                         </View>
                         <View style={styles.inputContainer}>
-                            <Text>Password</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <TextInput
-                                    style={[styles.input, { flex: 1 }]}
-                                    onChangeText={(text) => setPassword(text)}
-                                    value={password}
-                                    secureTextEntry={!isPasswordVisible}
-                                    placeholder="Enter your password"
-                                    placeholderTextColor="#7F27FF"
-                                />
+                                <Text style={{ color: "#000", marginBottom: 10 }}>Password </Text>
 
+                                <View
+                                    style={
+
+                                        {
+                                            flexDirection: "row",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            borderColor: "#7F27FF",
+                                            borderWidth: 1,
+                                            borderRadius: 10,
+                                            padding: 5,
+                                            marginBottom: 10
+
+                                        }
+                                    }
+                                >
+                                    <TextInput
+                                        placeholder="Password"
+                                        autoCapitalize='none'
+                                        autoCorrect={false}
+                                        onChangeText={(e) => setPassword(e)}
+                                        value={password}
+                                        selectionColor="#7F27FF"
+                                        secureTextEntry={!isPasswordVisible}
+                                        placeholderTextColor="#7F27FF"
+                                        style={{ color: "black", flex: 1 }}
+                                    ></TextInput>
+                                    <TouchableOpacity
+                                        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                                    >
+                                        <Icon
+                                            name={
+                                                isPasswordVisible ? "eye" : "eye-with-line"}
+                                            color='#7F27FF'
+                                            size={20}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
                         <Text style={{marginBottom: 10}}>Enter OTP</Text>
                         <View
                             style={
@@ -146,10 +176,10 @@ const SignUp = () => {
                                     justifyContent: "space-between",
                                     alignItems: "center",
                                     borderColor: "#7F27FF",
-                                    backgroundColor: "white",
+                                    backgroundColor: "#E5D4FF",
                                     borderWidth: 1,
                                     borderRadius: 10,
-                                    padding: 10,
+                                    padding: 5,
                                     marginBottom: 20
 
                                 }
@@ -195,13 +225,13 @@ const SignUp = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FDF4F5',
+        backgroundColor: '#E5D4FF',
         alignItems: 'center',
         justifyContent: 'center',
     },
     formContainer: {
         width: width / 1.2,
-        backgroundColor: '#fff',
+        backgroundColor: '#E5D4FF',
         borderRadius: 10,
         padding: 20,
     },
@@ -219,7 +249,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
-        color: '#7F27FF',
+        color: '#000',
     },
     signupButton: {
         marginTop: 20,

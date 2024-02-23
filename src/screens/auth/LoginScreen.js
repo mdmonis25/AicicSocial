@@ -163,7 +163,7 @@ const LoginScreen = () => {
                                     >
                                         <Icon
                                             name={
-                                                isPasswordVisible ? "eye-off" : "eye-with-line"}
+                                                isPasswordVisible ? "eye" : "eye-with-line"}
                                             color='#7F27FF'
                                             size={20}
                                         />
@@ -182,7 +182,7 @@ const LoginScreen = () => {
                                 <Text style={styles.forgotPassword}>Forgot Password?</Text>
                             </TouchableOpacity>
                             {
-                                !state.isSignout ? (<TouchableOpacity onPress={handleSignup}>
+                                state.isSignout ? (<TouchableOpacity onPress={handleSignup}>
                                     <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
                                 </TouchableOpacity>) : null
 
@@ -213,13 +213,13 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FDF4F5',
+        backgroundColor: '#E5D4FF',
         alignItems: 'center',
         justifyContent: 'center',
     },
     formContainer: {
         width: width / 1.2,
-        backgroundColor: '#fff',
+        backgroundColor: '#E5D4FF',
         borderRadius: 10,
         padding: 20,
     },
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
-        color: '#7F27FF',
+        color: '#000',
         height: 50,
     },
     loginButton: {
