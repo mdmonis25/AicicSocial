@@ -1,22 +1,21 @@
+import { ActivityIndicator, AppState, View } from "react-native";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 
-import { createContext, useEffect, useReducer, useState } from "react";
-
-import { AppState } from "react-native";
-// import { AppStateProvider } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthNavigator from "./src/navigations/AuthNavigator";
-// import Component from "./components/MyComponent";
-import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
-// import { NativeBaseProvider } from "native-base";
 import MainNavigator from "./src/navigations/MainNavigator";
-import { useAuth } from "./src/contexts/AuthContext";
-// import { AuthProvider } from "./src/contexts/AuthContext";
+import { NavigationContainer } from "@react-navigation/native";
+
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+
+
+// import { useAuth } from "./src/contexts/AuthContext";
 
 const userData = {
   name: "",
   email: "",
-  mobileno: "",
+  mobile: "",
   isSignout: true,
   devicetoken: "",
   token: "",
@@ -25,23 +24,24 @@ const userData = {
   address: "",
 };
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthReducer = async (state, action) => {
+  console.log("this is payload", action.payload);
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
-        userData: action.payload,
         isSignout: false,
+        userData: action.payload,
       };
-    case "LOGOUT":
-      await AsyncStorage.removeItem("userData");
-      return {
-        ...state,
-        userData: userData,
-        isSignout: true,
-      };
+      case "LOG_OUT":
+        // await AsyncStorage.removeItem("userData");
+        return {
+          isSignout: true,
+          ...userData, // Reset state to initial values
+        };
+      
     case "PROFILE_UPDATE":
       return {
         ...state,
@@ -56,13 +56,18 @@ export const AuthReducer = async (state, action) => {
 const App = () => {
   const [appState, setAppState] = useState(AppState.currentState);
   const [state, dispatch] = useReducer(AuthReducer, userData);
+
+  console.log("this is state", state);
+
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <NavigationContainer>
-        {!state.isSignout ? <AuthNavigator /> : <MainNavigator />}
+         { 
+          state.isSignout ? <AuthNavigator /> : <MainNavigator />
+         }
       </NavigationContainer>
     </AuthContext.Provider>
   )
 }
 
-export default App
+export default App;

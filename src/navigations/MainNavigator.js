@@ -1,58 +1,57 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import TabNavigator from './TabNavigator';
-import {StatusBar} from 'react-native';
-import TripDetailsScreen from '../screens/TripDetailsScreen';
-import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
-import LoginScreen from '../screens/LoginScreen';
-import SignUp from '../screens/SignUpScreen';
+import React, { useContext } from 'react';
 
-const Stack = createSharedElementStackNavigator();
+import { AuthContext } from '../../App';
+import Login from '../screens/LoginScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import Root from './BottomTabNavigator';
+import SignUp from '../screens/SignUpScreen';
+import { StatusBar } from 'react-native';
+import TripDetails from '../screens/TripDetailsScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const MainNavigator = () => {
+  const { state} = useContext(AuthContext);
   return (
-    <NavigationContainer>
-      <StatusBar hidden />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Root"
-          component={TabNavigator}
-          options={{
-            headerShown: false,
-            useNativeDriver: true,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Signup"
-          component={SignUp}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="TripDetails"
-          component={TripDetailsScreen}
-          options={{
-            headerShown: false,
-            useNativeDriver: true,
-            gestureEnabled: false,
-            cardStyleInterpolator: ({current: {progress}}) => ({
-              cardStyle: {
-                opacity: progress,
-              },
-            }),
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName='Root' screenOptions={{headerShown: false}}> 
+      <Stack.Screen
+        name="Root"
+        component={Root}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SignUp}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="TripDetails"
+        component={TripDetails}
+        options={{
+          headerShown: false,
+          useNativeDriver: true,
+          gestureEnabled: false,
+          cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+              opacity: progress,
+            },
+          }),
+        }}
+      />
+    </Stack.Navigator>
+
   );
 };
 

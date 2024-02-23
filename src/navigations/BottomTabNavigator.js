@@ -1,35 +1,43 @@
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import FavoriteScreen from '../screens/FavoriteScreen';
-import Icon from '../components/shared/Icon';
+import {Animated, StyleSheet} from 'react-native';
 import {colors, sizes} from '../constants/theme';
-import {StyleSheet, Animated} from 'react-native';
-import HomeNavigator from './HomeNavigator';
-import SearchNavigator from './SearchNavigator';
+
+import Favorite from '../screens/FavoriteScreen';
+import Home from '../screens/HomeScreen';
+import Icon from '../components/shared/Icon';
+import React from 'react';
+import Search from '../screens/SearchScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const tabs = [
   {
     name: 'Home',
-    screen: HomeNavigator,
+    screen: Home,
+    options: {
+      headerShown: false,
+    },
   },
   {
-    name: 'Search',
-    screen: SearchNavigator,
+    name: 'Add',
+    screen: Search,
+    options: {
+      headerShown: false,
+    },
   },
   {
     name: 'Favorite',
-    screen: FavoriteScreen,
+    screen: Favorite,
   },
 ];
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const Root = () => {
   const offsetAnimation = React.useRef(new Animated.Value(0)).current;
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Add"
+        shifting={false}
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -93,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabNavigator;
+export default Root;
