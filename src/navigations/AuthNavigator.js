@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Login from '../screens/LoginScreen';
 import React from 'react'
 import SignUp from '../screens/SignUpScreen';
+import SignUp from '../screens/SignUpScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();

@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
+
 const MainNavigator = () => {
   const { state} = useContext(AuthContext);
   return (
