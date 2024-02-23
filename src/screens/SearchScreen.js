@@ -22,7 +22,8 @@ const SearchScreen = () => {
       //   route: 'timeline',
       //   user_id: 2
       // });
-      const response  = await socialApi.post ('/timeline', {
+      const response  = await socialApi.post ('', {
+        route: 'timeline',
         user_id: 2
       })
       if (response.data.result === 1) {

@@ -2,7 +2,7 @@ import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, S
 import { Button, Text } from '@rneui/themed';
 import React, { useContext, useState } from 'react';
 
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';

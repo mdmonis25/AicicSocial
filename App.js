@@ -5,7 +5,6 @@ import AuthNavigator from "./src/navigations/AuthNavigator";
 import MainNavigator from "./src/navigations/MainNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 
-
 const userData = {
   name: "",
   email: "",

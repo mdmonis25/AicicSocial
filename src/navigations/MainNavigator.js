@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 
 import { AuthContext } from '../../App';
-import Login from '../screens/LoginScreen';
+import Login from '../screens/auth/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import Root from './BottomTabNavigator';
-import SignUp from '../screens/SignUpScreen';
+import SignUp from '../screens/auth/SignUpScreen';
 import { StatusBar } from 'react-native';
 import TripDetails from '../screens/TripDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

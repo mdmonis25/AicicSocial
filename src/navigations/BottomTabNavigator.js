@@ -2,90 +2,53 @@ import {Animated, StyleSheet} from 'react-native';
 import {colors, sizes} from '../constants/theme';
 
 import Favorite from '../screens/FavoriteScreen';
-import Home from '../screens/HomeScreen';
+import HomePage from '../screens/SearchScreen';
 import Icon from '../components/shared/Icon';
+import Profile from '../screens/profile/ProfileScreen';
 import React from 'react';
-import Search from '../screens/SearchScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-const tabs = [
-  {
-    name: 'Home',
-    screen: Home,
-    options: {
-      headerShown: false,
-    },
-  },
-  {
-    name: 'Search',
-    screen: Search,
-    options: {
-      headerShown: false,
-    },
-  },
-  {
-    name: 'Favorite',
-    screen: Favorite,
-  },
-];
+// import Home from '../screens/HomeScreen';
 
-const Tab = createBottomTabNavigator();
+
+
+
+
+
+// const tabs = [
+//   {
+//     name: 'Home',
+//     screen: Home,
+//     options: {
+//       headerShown: false,
+//     },
+//   },
+//   {
+//     name: 'HomePage',
+//     screen: HomePage,
+//     options: {
+//       headerShown: false,
+//     },
+//   },
+//   {
+//     name: 'Profile',
+//     screen: ProfileScreen,
+//     options: {
+//       headerShown: false,
+//     },
+//   },
+// ];
+
+const Tab = createMaterialBottomTabNavigator();
 
 const Root = () => {
-  const offsetAnimation = React.useRef(new Animated.Value(0)).current;
   return (
-    <>
-      <Tab.Navigator
-        initialRouteName="Search"
-        shifting={false}
-        screenOptions={{
-          headerShown: false,
-          tabBarShowLabel: false,
-        }}>
-        {tabs.map(({name, screen}, index) => {
-          return (
-            <Tab.Screen
-              key={name}
-              name={name}
-              component={screen}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  return (
-                    <Icon
-                      icon={name}
-                      size={40}
-                      style={{
-                        tintColor: focused ? colors.primary : colors.gray,
-                      }}
-                    />
-                  );
-                },
-              }}
-              listeners={{
-                focus: () => {
-                  Animated.spring(offsetAnimation, {
-                    toValue: index * (sizes.width / tabs.length),
-                    useNativeDriver: true,
-                  }).start();
-                },
-              }}
-            />
-          );
-        })}
+  
+      <Tab.Navigator initialRouteName='HomePage'  activeColor='#7F27FF' inactiveColor='gray' barStyle={{backgroundColor: '#ffffff'}}>
+        <Tab.Screen name = "HomePage" component={HomePage} />
+        <Tab.Screen name = "Profile" component={Profile} />
       </Tab.Navigator>
-      <Animated.View
-        style={[
-          styles.indicator,
-          {
-            transform: [
-              {
-                translateX: offsetAnimation,
-              },
-            ],
-          },
-        ]}
-      />
-    </>
+  
   );
 };
 

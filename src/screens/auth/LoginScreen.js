@@ -2,12 +2,12 @@ import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, S
 import { Button, Text, useThemeMode } from '@rneui/themed';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../../App';
 import Icon from 'react-native-vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import base64 from 'react-native-base64';
-import socialApi from '../api/socialApi';
+import socialApi from '../../api/socialApi';
 import { useNavigation } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
@@ -24,16 +24,15 @@ const LoginScreen = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
 
-    // const baseUrl = 'https://guflu.in/Social_media/smedia_api.php'
 
     const handleLogin = async () => {
         setLoading(true);
         try {
-           const response = await socialApi.post('/login', {
-               params : {
-                   token : base64.encode(mobile + ":" + password)
-               }
-           })
+            const response = await socialApi.post('', {
+                route: 'login',
+                token: base64.encode(mobile + ":" + password)
+            })
+
             console.log("Response Status: ", response.status);
 
             if (response.status === 200) {
