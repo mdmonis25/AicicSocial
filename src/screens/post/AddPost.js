@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import React from 'react'
 
-export default function ProfileScreen() {
+export default function AddPost() {
   return (
     <View>
-      <Text style={styles.text}>ProfileScreen</Text>
+      <Text style={styles.text}>AddPost</Text>
     </View>
   )
 }

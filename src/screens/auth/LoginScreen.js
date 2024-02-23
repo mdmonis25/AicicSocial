@@ -105,7 +105,7 @@ const LoginScreen = () => {
     }, []);
 
 
-    if(state._j.isSignout === false){
+    if(state.isSignout === false){
             return (
                 navigation.navigate('Root', { screen: 'HomePage' })
             )

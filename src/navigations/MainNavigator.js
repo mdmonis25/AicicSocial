@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 
+import AddPost from '../screens/post/AddPost';
 import { AuthContext } from '../../App';
 import Login from '../screens/auth/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import ProfileScreen from '../screens/profile/ProfileScreen';
 import Root from './BottomTabNavigator';
 import SignUp from '../screens/auth/SignUpScreen';
 import { StatusBar } from 'react-native';
@@ -33,6 +35,20 @@ const MainNavigator = () => {
       <Stack.Screen
         name="Signup"
         component={SignUp}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="AddPost"
+        component={AddPost}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
         options={{
           headerShown: false,
         }}

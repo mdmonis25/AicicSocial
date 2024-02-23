@@ -1,6 +1,7 @@
 import {Animated, StyleSheet} from 'react-native';
 import {colors, sizes} from '../constants/theme';
 
+import AddPost from '../screens/post/AddPost';
 import Favorite from '../screens/FavoriteScreen';
 import HomePage from '../screens/SearchScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,41 +11,12 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 // import Home from '../screens/HomeScreen';
 
-
-
-
-
-
-// const tabs = [
-//   {
-//     name: 'Home',
-//     screen: Home,
-//     options: {
-//       headerShown: false,
-//     },
-//   },
-//   {
-//     name: 'HomePage',
-//     screen: HomePage,
-//     options: {
-//       headerShown: false,
-//     },
-//   },
-//   {
-//     name: 'Profile',
-//     screen: ProfileScreen,
-//     options: {
-//       headerShown: false,
-//     },
-//   },
-// ];
-
 const Tab = createMaterialBottomTabNavigator();
 
 const Root = () => {
   return (
   
-      <Tab.Navigator initialRouteName='HomePage'  activeColor='#7F27FF' inactiveColor='gray' barStyle={{backgroundColor: '#ffffff'}}>
+      <Tab.Navigator initialRouteName='HomePage'  activeColor='#7F27FF' inactiveColor='#E7BCDE' barStyle={{backgroundColor: '#ffffff'}}>
         <Tab.Screen 
         name = "HomePage"
          component={HomePage}
@@ -54,6 +26,15 @@ const Root = () => {
             <MaterialCommunityIcons name="home" color={color} size={26} />
           )
         }} />
+         <Tab.Screen
+         name = "Add post"
+          component={AddPost}
+          options={{
+            tabBarLabel: 'Add post',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="plus-circle" color={color} size={26} />
+            )
+          }} />
         <Tab.Screen
          name = "Profile"
           component={Profile}
@@ -69,15 +50,7 @@ const Root = () => {
 };
 
 const styles = StyleSheet.create({
-  // indicator: {
-  //   position: 'absolute',
-  //   width: 10,
-  //   height: 2,
-  //   left: sizes.width / tabs.length / 2 - 5,
-  //   bottom: 30,
-  //   backgroundColor: colors.primary,
-  //   zIndex: 100,
-  // },
+
 });
 
 export default Root;
