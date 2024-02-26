@@ -10,6 +10,7 @@ import SignUp from '../screens/auth/SignUpScreen';
 import { StatusBar } from 'react-native';
 import TripDetails from '../screens/TripDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from '../screens/auth/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,8 +27,8 @@ const MainNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Login"
-        component={Login}
+        name="LoginScreen"
+        component={LoginScreen}
         options={{
           headerShown: false,
         }}

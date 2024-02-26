@@ -1,6 +1,6 @@
 import { ActivityIndicator, AppState, View } from "react-native";
 import React, { createContext, useEffect, useReducer, useState } from "react";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthNavigator from "./src/navigations/AuthNavigator";
 import MainNavigator from "./src/navigations/MainNavigator";
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,13 +26,21 @@ export const AuthReducer = async (state, action) => {
       return {
         ...state,
         isSignout: false,
-        userData: action.payload,
+        token: action.payload.token,
+        name: action.payload.name,
+        mobile: action.payload.mobile,
+        email : action.payload.email,
+        password: action.payload.password,
+        // plans: action.payload.plans,
+        address: action.payload.address,
+        uid : action.payload.uid,
+        // userData: action.payload,
       };
       case "LOG_OUT":
-        // await AsyncStorage.removeItem("userData");
+        await AsyncStorage.removeItem("userData");
         return {
-          isSignout: true,
           ...userData, // Reset state to initial values
+          isSignout: true,
         };
       
     case "PROFILE_UPDATE":
@@ -53,10 +61,11 @@ const App = () => {
   console.log("this is state", state);
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ authState:state, authDispatch:dispatch }}>
       <NavigationContainer>
          { 
-          state.isSignout ? <AuthNavigator /> : <MainNavigator />
+           state.isSignout ? <AuthNavigator /> : <MainNavigator />
+          //{state._j==null ? <AuthNavigator /> : <MainNavigator />}
          }
       </NavigationContainer>
     </AuthContext.Provider>

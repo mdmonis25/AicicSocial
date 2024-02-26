@@ -15,7 +15,7 @@ const height = Dimensions.get('window').height;
 
 const LoginScreen = () => {
     const navigation = useNavigation();
-    const { state, dispatch } = useContext(AuthContext);
+    const { authState, authDispatch } = useContext(AuthContext);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const { setMode, mode } = useThemeMode();
     const [mobile, setMobile] = useState("");
@@ -42,7 +42,7 @@ const LoginScreen = () => {
                 const userData = response.data.data;
                 if (response.data.result == 1) {
                     console.log("Login Success");
-                    dispatch({ type: "LOGIN", payload: userData });
+                    authDispatch({ type: "LOGIN", payload: userData });
                     navigation.navigate('Root', { screen: 'Search' });
                 } else {
                     Alert.alert("Unable to Login", response.data.message);
@@ -105,9 +105,10 @@ const LoginScreen = () => {
     }, []);
 
 
-    if(state.isSignout === false){
+    if(authState.isSignout === false){
             return (
-                navigation.navigate('Root', { screen: 'HomePage' })
+                navigation.navigate('LoginScreen')
+                // navigation.navigate('LoginScreen', { screen: 'HomePage' })
             )
     }
 
@@ -188,7 +189,7 @@ const LoginScreen = () => {
                                 <Text style={styles.forgotPassword}>Forgot Password?</Text>
                             </TouchableOpacity>
                             {
-                                state.isSignout ? (<TouchableOpacity onPress={handleSignup}>
+                                authState.isSignout ? (<TouchableOpacity onPress={handleSignup}>
                                     <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
                                 </TouchableOpacity>) : null
 

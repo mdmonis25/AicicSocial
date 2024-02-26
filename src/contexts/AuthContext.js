@@ -1,5 +1,6 @@
 // AuthContext.js
 
+import { useNavigation } from '@react-navigation/native';
 import React, { createContext, useContext, useReducer } from 'react';
 
 const AuthContext = createContext();
@@ -29,10 +30,21 @@ const authReducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const navigation = useNavigation();
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const enhancedDispatch = action => {
+    if (action.type === 'LOGOUT') {
+      // navigation.navigate('LoginScreen'); // Navigate to login screen on logout
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'LoginScreen' }],
+      });
+    }
+    dispatch(action);
+  };
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch:enhancedDispatch }}>
       {children}
     </AuthContext.Provider>
   );

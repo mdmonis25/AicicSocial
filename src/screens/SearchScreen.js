@@ -5,16 +5,23 @@ import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Ionicons';
 import socialApi from '../api/socialApi';
 
-// import axios from 'axios';
+
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
 const SearchScreen = () => {
-  const { state, dispatch } = useContext(AuthContext);
+  // const { state, dispatch } = useContext(AuthContext);
+  // const { dispatch } = useContext(AuthContext);
+  const { authState, authDispatch } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchData();
-  }, []);
+    console.log("This is state SearchScreeen wala:", authState)
+    
+  }, [authState]);
 
   const fetchData = async () => {
     try {
@@ -103,7 +110,8 @@ const SearchScreen = () => {
         />
 
         <Button
-          onPress={() => dispatch({ type: "LOG_OUT" })}
+          // onPress={() => authDispatch({ type: "LOG_OUT"})}
+          onPress={()=>{navigation.navigate('LoginScreen')}}
           title="Logout"
           color="blue"
           accessibilityLabel="Learn more about this purple button"
