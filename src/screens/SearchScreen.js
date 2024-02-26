@@ -95,7 +95,7 @@ const SearchScreen = () => {
             <TouchableOpacity style={{ marginRight: 20 }}>
               <Icon name="search" size={24} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate('ChatScreen')}}>
               <Icon name="add-circle-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>

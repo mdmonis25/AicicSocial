@@ -11,6 +11,7 @@ import { StatusBar } from 'react-native';
 import TripDetails from '../screens/TripDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,13 @@ const MainNavigator = () => {
         <Stack.Screen
         name="AddPost"
         component={AddPost}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
         options={{
           headerShown: false,
         }}
