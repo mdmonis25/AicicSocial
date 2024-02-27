@@ -1,15 +1,14 @@
 import {Animated, StyleSheet} from 'react-native';
 import {colors, sizes} from '../constants/theme';
-
-import AddPost from '../screens/post/AddPost';
 import Favorite from '../screens/FavoriteScreen';
 import HomePage from '../screens/SearchScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Profile from '../screens/profile/ProfileScreen';
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import AddPost from '../screens/AddPost';
+import FavoriteScreen from '../screens/FavoriteScreen';
 
-// import Home from '../screens/HomeScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -36,8 +35,8 @@ const Root = () => {
             )
           }} />
         <Tab.Screen
-         name = "Profile"
-          component={Profile}
+         name = "FavoriteScreen"
+          component={FavoriteScreen}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color }) => (

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import AddPost from '../screens/post/AddPost';
+import AddPost from '../screens/AddPost';
 import { AuthContext } from '../../App';
 import Login from '../screens/auth/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,12 +12,13 @@ import TripDetails from '../screens/TripDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
 import ChatScreen from '../screens/ChatScreen';
+import Message from '../screens/Message';
 
 const Stack = createNativeStackNavigator();
 
 
 const MainNavigator = () => {
-  const { state} = useContext(AuthContext);
+  const {state} = useContext(AuthContext);
   return (
     <Stack.Navigator initialRouteName='Root' screenOptions={{headerShown: false}}> 
       <Stack.Screen
@@ -51,6 +52,13 @@ const MainNavigator = () => {
         <Stack.Screen
         name="ChatScreen"
         component={ChatScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="Message"
+        component={Message}
         options={{
           headerShown: false,
         }}

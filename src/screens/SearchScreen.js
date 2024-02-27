@@ -1,15 +1,10 @@
 import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-
 import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Ionicons';
 import socialApi from '../api/socialApi';
-
-
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-
-
 const SearchScreen = () => {
   // const { state, dispatch } = useContext(AuthContext);
   // const { dispatch } = useContext(AuthContext);
@@ -90,7 +85,7 @@ const SearchScreen = () => {
       <View style={{ flex: 1 }}>
         {/* Header Section */}
         <View style={styles.header}>
-          <Text style={styles.headerText}>Aicic Network</Text>
+          <Text style={styles.headerText}> Aicic Social Media </Text>
           <View style={styles.headerIcons}>
             <TouchableOpacity style={{ marginRight: 20 }}>
               <Icon name="search" size={24} color="black" />
@@ -108,14 +103,6 @@ const SearchScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           style={styles.feed}
         />
-
-        <Button
-          // onPress={() => authDispatch({ type: "LOG_OUT"})}
-          onPress={()=>{navigation.navigate('LoginScreen')}}
-          title="Logout"
-          color="blue"
-          accessibilityLabel="Learn more about this purple button"
-        />
       </View>
     </View>
   );
@@ -124,7 +111,10 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5D4FF',
+    // backgroundColor: 'grey',
+    // backgroundColor:'#3247DC4D',
+    // backgroundColor:'#AED6G5',
+    backgroundColor:'#EFF3FC',
     marginTop: 0,
   },
   postImage: {
