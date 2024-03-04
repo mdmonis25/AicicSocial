@@ -1,96 +1,161 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import {Text, View,Button, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const ProfileScreen = () => {
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const navigation = useNavigation();
+
+  const handleLogout = () => {
+    // Logic for logout
+    navigation.navigate('LoginScreen')
+    setLogoutModalVisible(false);
+  };
+
   return (
-    
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-          style={[styles.button]}
-          onPress={()=>{navigation.navigate('LoginScreen')}}
-          title="Logout"
-          color="blue"
-          accessibilityLabel="Learn more about this purple button"
-        />
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" size={24} color="#333" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Profile</Text>
+      </View>
+
+      {/* Profile Info */}
+      <View style={styles.profileInfo}>
+        <Image source={require('../../assets/images/users/35.jpeg')} style={styles.profilePic} />
+        <Text style={styles.profileName}>Md Monis</Text>
+      </View>
+
+      {/* Menu */}
+      <View style={styles.menu}>
+        <TouchableOpacity style={styles.menuItem}>
+          <Icon name="person-outline" size={24} color="#333" />
+          <Text style={styles.menuText}>Update Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Icon name="lock-closed-outline" size={24} color="#333" />
+          <Text style={styles.menuText}>Change Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Icon name="settings-outline" size={24} color="#333" />
+          <Text style={styles.menuText}>Settings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={() => setLogoutModalVisible(true)}>
+          <Icon name="log-out-outline" size={24} color="#333" />
+          <Text style={styles.menuText}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Logout Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={logoutModalVisible}
+        onRequestClose={() => setLogoutModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Are you sure you want to logout?</Text>
+            <TouchableOpacity onPress={handleLogout} style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>Logout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setLogoutModalVisible(false)} style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>AICIC © 2024</Text>
+      </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5D4FF',
-    marginTop: 0,
-  },
-  postImage: {
-    width: '100%',
-    height: 200, // Adjust height as needed
-    marginTop: 10, // Add margin top to separate from the post content
-    borderRadius: 10, // Apply border radius if desired
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingTop: 20,
   },
-  headerText: {
-    fontSize: 18,
-    color: '#7F27FF',
+  headerTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding : 10
+    color: '#333',
   },
-  headerIcons: {
-    flexDirection: 'row',
+  profileInfo: {
+    alignItems: 'center',
+    marginTop: 30,
   },
-  feed: {
-    flex: 1,
-    marginTop: 20,
+  profilePic: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
-  card: {
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 10,
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  profileName: {
+    fontSize: 18,
+    marginTop: 10,
+    color: '#333',
   },
-  userInfo: {
+  menu: {
+    marginTop: 30,
+    paddingHorizontal: 20,
+  },
+  menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 15,
   },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  username: {
-    fontWeight: 'bold',
+  menuText: {
+    marginLeft: 10,
     fontSize: 16,
-    color: '#7F27FF',
+    color: '#333',
   },
-  content: {
-    marginTop: 10,
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: '#333',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  modalButtonText: {
+    color: '#fff',
     fontSize: 16,
-    color: '#000',
   },
-  interactionButtons: {
-    flexDirection: 'row',
-    marginTop: 10,
+  footer: {
+    alignItems: 'center',
+    marginVertical: 20,
   },
-  button: {
-    marginRight: 20,
+  footerText: {
+    fontSize: 14,
+    color: '#333',
   },
 });
 
