@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {Text, View,Button, StyleSheet} from 'react-native';
-const FavoriteScreen = () => {
+const ProfileScreen = () => {
   const navigation = useNavigation();
   return (
+    
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Button
           style={[styles.button]}
@@ -93,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FavoriteScreen;
+export default ProfileScreen;
