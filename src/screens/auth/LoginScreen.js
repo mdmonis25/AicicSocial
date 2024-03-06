@@ -1,4 +1,5 @@
-import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+
+import { ActivityIndicator, Alert, Dimensions, Image, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Button, Text, useThemeMode } from '@rneui/themed';
 import React, { useContext, useEffect, useState } from 'react';
 
@@ -22,8 +23,6 @@ const LoginScreen = () => {
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-
-
 
     const handleLogin = async () => {
         setLoading(true);
@@ -105,11 +104,11 @@ const LoginScreen = () => {
     }, []);
 
 
-    if(authState.isSignout === false){
-            return (
-                navigation.navigate('LoginScreen')
-                // navigation.navigate('LoginScreen', { screen: 'HomePage' })
-            )
+    if (authState.isSignout === false) {
+        return (
+            navigation.navigate('LoginScreen')
+            // navigation.navigate('LoginScreen', { screen: 'HomePage' })
+        )
     }
 
     return (
@@ -122,6 +121,13 @@ const LoginScreen = () => {
                     >
                         <StatusBar barStyle={mode === 'dark' ? 'light-content' : 'dark-content'} />
                         <View style={styles.formContainer}>
+                            <View style={styles.iconContainer}>
+                                <Image
+                                    resizeMode='cover'
+                                    source={require('../../../assets/icons/LogoAicicHD.jpg')}
+                                    style={styles.appIcon}
+                                />
+                            </View>
                             <View style={styles.inputContainer}>
                                 <Text style={{ color: "#7F27FF" }}>Mobile Number</Text>
                                 <TextInput
@@ -136,7 +142,7 @@ const LoginScreen = () => {
                                 />
                             </View>
                             <View style={styles.inputContainer}>
-                                <Text style={{ color: "#7F27FF" }}>Password </Text>
+                                <Text style={{ color: "#7F27FF", marginBottom: 10 }}>Password </Text>
 
                                 <View
                                     style={
@@ -163,16 +169,17 @@ const LoginScreen = () => {
                                         selectionColor="#7F27FF"
                                         secureTextEntry={!isPasswordVisible}
                                         placeholderTextColor="#7F27FF"
-                                        style={{ color: "black", flex: 1 }}
+                                        style={{ color: "black", flex: 1, height:40 }}
                                     ></TextInput>
                                     <TouchableOpacity
                                         onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                                     >
                                         <Icon
                                             name={
-                                                isPasswordVisible ? "eye" : "eye-with-line"}
+                                            isPasswordVisible ? "eye" : "eye-with-line"}
                                             color='#7F27FF'
-                                            size={20}
+                                            size={18}
+                                            style={{ marginRight: 10 }}
                                         />
                                     </TouchableOpacity>
                                 </View>
@@ -183,7 +190,7 @@ const LoginScreen = () => {
                                 onPress={onLoginPress}
                                 style={styles.loginButton}
                                 textStyle={styles.loginButtonText}
-                                color="#7F27FF"
+                                color="#8153FD"
                             />
                             <TouchableOpacity onPress={handleForgotPassword}>
                                 <Text style={styles.forgotPassword}>Forgot Password?</Text>
@@ -220,15 +227,25 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E5D4FF',
+        backgroundColor: '#FFF',
         alignItems: 'center',
         justifyContent: 'center',
     },
     formContainer: {
         width: width / 1.2,
-        backgroundColor: '#E5D4FF',
+        backgroundColor: '#FFF',
         borderRadius: 10,
         padding: 20,
+    },
+    iconContainer: {
+        alignItems: 'center',
+        marginBottom: 20,
+        marginTop: -70
+    },
+    appIcon: {
+        width: 204, 
+        height: 200, 
+        
     },
     inputContainer: {
         marginBottom: 20,
@@ -244,7 +261,7 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         marginTop: 20,
-        backgroundColor: '#7F27FF',
+        backgroundColor: '#6E43F4',
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderRadius: 10,
