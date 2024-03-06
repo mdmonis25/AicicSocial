@@ -1,13 +1,11 @@
 import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Button, Text } from '@rneui/themed';
 import React, { useContext, useState } from 'react';
-
 import { AuthContext } from '../../../App';
 import Icon from 'react-native-vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -16,12 +14,14 @@ const SignUp = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [mobile, setMobile] = useState("");
+    //const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [otp, setOtp] = useState("");
-    const [name, setName] = useState("");
+    const [fullname, setFullname] = useState("");
+    //const [name, setName] = useState("");
 
-    const { state, dispatch } = useContext(AuthContext);
+   // const { state, dispatch } = useContext(AuthContext);
 
     const baseUrl = 'https://guflu.in/Social_media/smedia_api.php';
 
@@ -31,7 +31,7 @@ const SignUp = () => {
 
             const response = await axios.post(baseUrl, {
                 route: 'register',
-                fullname: name,
+                fullname: fullname,
                 mobile: mobile,
                 email: email,
                 password: password,
@@ -45,8 +45,8 @@ const SignUp = () => {
 
                 if (response.data.result == 1) {
                     console.log("Signup Success");
-                    dispatch({ type: "LOGIN", payload: response.data });
-                    navigation.navigate("AnimTab1");
+                    //dispatch({ type: "LOGIN", payload: response.data });
+                    navigation.navigate("LoginScreen");
                 } else if (response.data.result == 2) {
                     Alert.alert("Already Registered", response.data.message);
                 }
@@ -112,6 +112,21 @@ const SignUp = () => {
                                 placeholderTextColor="#7F27FF"
                             />
                         </View>
+
+                        <View style={styles.inputContainer}>
+    <Text>Full Name</Text>
+    <TextInput
+        autoCapitalize="words"
+        autoCorrect={false}
+        style={styles.input}
+        onChangeText={(text) => setFullname(text)}
+        value={fullname}
+        placeholder="Enter your full name"
+        placeholderTextColor="#7F27FF"
+    />
+</View>
+                        
+                        
                         <View style={styles.inputContainer}>
                             <Text>Mobile</Text>
                             <TextInput
