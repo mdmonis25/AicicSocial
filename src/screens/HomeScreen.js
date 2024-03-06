@@ -1,4 +1,4 @@
-// import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import { Button, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import React, { useContext, useEffect, useState } from 'react';
 // import { AuthContext } from '../../App';
 // import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,6 +10,7 @@
 //   const { authState, authDispatch } = useContext(AuthContext);
 //   const [posts, setPosts] = useState([]);
 //   const navigation = useNavigation();
+//   const [modalVisible, setModalVisible] = useState(false);
 
 //   useEffect(() => {
 //     fetchData();
@@ -36,16 +37,27 @@
 
 //   const handleLikePress = async (postId) => {
 //     try {
+//       const postToUpdate = posts.find(post => post.id === postId);
+//       const isLiked = postToUpdate.is_like === 1;
+
+//       if (isLiked) {
+//         // If already liked, do nothing
+//         return;
+//       }
+
+//       const route = isLiked ? 'unlike_post' : 'like_post';
+
 //       const response = await socialApi.post('', {
-//         route: posts.find(post => post.id === postId).is_like === 1 ? 'unlike_post' : 'like_post',
+//         route: route,
 //         post_id: 2,
 //         user_id: 2,
 //       });
+
 //       if (response.data.success) {
 //         console.log('Post action performed successfully');
 //         const updatedPosts = posts.map(post => {
-//           if (post.id === postId) {
-//             return { ...post, is_like: post.is_like === 1 ? 0 : 1 };
+//           if (post.id === 2) {
+//             return { ...post, is_like: isLiked ? 0 : 1 };
 //           }
 //           return post;
 //         });
@@ -58,6 +70,32 @@
 //     }
 //   };
 
+//   const renderCommentModal = () => (
+//     <Modal
+//       animationType="slide"
+//       transparent={true}
+//       visible={modalVisible}
+//       onRequestClose={() => {
+//         setModalVisible(false);
+//       }}
+//     >
+//       <View style={styles.modalContainer}>
+//         <View style={styles.modalContent}>
+//           <ScrollView>
+//             {/* Display comments here */}
+//             {/* Example: */}
+//             <Text>Comment 1</Text>
+//             <Text>Comment 2</Text>
+//             <Text>Comment 3</Text>
+//             {/* Replace with actual comment data */}
+//           </ScrollView>
+//           <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+//             <Icon name="close-circle-outline" size={24} color="black" />
+//           </TouchableOpacity>
+//         </View>
+//       </View>
+//     </Modal>
+//   );
 //   const renderPost = ({ item }) => (
 //     <View style={styles.card}>
 //       <View style={styles.userInfo}>
@@ -72,9 +110,9 @@
 //       />
 //       <View style={styles.interactionButtons}>
 //         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
-//           <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "blue" : "black"} />
+//           <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "red" : "black"} />
 //         </TouchableOpacity>
-//         <TouchableOpacity style={styles.button}>
+//         <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
 //           <Icon name="chatbox-outline" size={24} color="black" />
 //         </TouchableOpacity>
 //         <TouchableOpacity style={styles.button}>
@@ -90,7 +128,7 @@
 //         <View style={styles.header}>
 //           <Text style={styles.headerText}> Aicic Social Media </Text>
 //           <View style={styles.headerIcons}>
-//             <TouchableOpacity style={{ marginRight: 20 }}>
+//             <TouchableOpacity style={{ marginRight: 20 }} onPress={()=>{navigation.navigate('SearchScreen')}}>
 //               <Icon name="search" size={24} color="black" />
 //             </TouchableOpacity>
 //             <TouchableOpacity onPress={() => { navigation.navigate('ChatScreen') }}>
@@ -99,11 +137,12 @@
 //           </View>
 //         </View>
 //         <FlatList
-//           data={posts.reverse()}
+//           data={posts}
 //           renderItem={renderPost}
 //           keyExtractor={(item) => item.id.toString()}
 //           style={styles.feed}
 //         />
+//         {renderCommentModal()}
 //       </View>
 //     </View>
 //   );
@@ -185,11 +224,29 @@
 //   button: {
 //     marginRight: 20,
 //   },
+//   modalContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+//   },
+//   modalContent: {
+//     backgroundColor: '#fff',
+//     borderRadius: 10,
+//     padding: 20,
+//     maxHeight: '80%',
+//     width: '90%',
+//   },
+//   closeButton: {
+//     position: 'absolute',
+//     top: 10,
+//     right: 10,
+//   },
 // });
 
 // export default HomeScreen;
 
-import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -201,10 +258,11 @@ const HomeScreen = () => {
   const { authState, authDispatch } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
-    console.log("This is state SearchScreeen wala:", authState)
+    console.log("This is state SearchScreen wala:", authState)
   }, [authState]);
 
   const fetchData = async () => {
@@ -260,6 +318,59 @@ const HomeScreen = () => {
     }
   };
 
+  const renderCommentModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(false);
+      }}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <ScrollView>
+            {/* Display comments here */}
+            {/* Example: */}
+            <View style={styles.chatContainer}>
+              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+              <View style={styles.chatContent}>
+                <Text style={styles.username}>Md Monis</Text>
+                <Text>Comment 1</Text>
+              </View>
+            </View>
+            <View style={styles.chatContainer}>
+              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+              <View style={styles.chatContent}>
+                <Text style={styles.username}>Ambarish Sharma</Text>
+                <Text>Comment 2</Text>
+              </View>
+            </View>
+            <View style={styles.chatContainer}>
+              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+              <View style={styles.chatContent}>
+                <Text style={styles.username}>Shivam Gupta</Text>
+                <Text>Comment 1</Text>
+              </View>
+            </View>
+            <View style={styles.chatContainer}>
+              {/* <Image source={{ uri: "../../assets/images/users/35.jpeg" }} style={styles.avatar} /> */}
+              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+              <View style={styles.chatContent}>
+                <Text style={styles.username}>Prabhat Kumar</Text>
+                <Text>Comment 2</Text>
+              </View>
+            </View>
+            {/* Replace with actual comment data */}
+          </ScrollView>
+          <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+            <Icon name="close-circle-outline" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+
   const renderPost = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.userInfo}>
@@ -274,9 +385,9 @@ const HomeScreen = () => {
       />
       <View style={styles.interactionButtons}>
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
-          <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "blue" : "black"} />
+          <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "red" : "black"} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
           <Icon name="chatbox-outline" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -292,7 +403,7 @@ const HomeScreen = () => {
         <View style={styles.header}>
           <Text style={styles.headerText}> Aicic Social Media </Text>
           <View style={styles.headerIcons}>
-            <TouchableOpacity style={{ marginRight: 20 }}>
+            <TouchableOpacity style={{ marginRight: 20 }} onPress={()=>{navigation.navigate('SearchScreen')}}>
               <Icon name="search" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { navigation.navigate('ChatScreen') }}>
@@ -306,6 +417,7 @@ const HomeScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           style={styles.feed}
         />
+        {renderCommentModal()}
       </View>
     </View>
   );
@@ -386,6 +498,32 @@ const styles = StyleSheet.create({
   },
   button: {
     marginRight: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    maxHeight: '80%',
+    width: '90%',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  chatContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  chatContent: {
+    marginLeft: 10,
   },
 });
 
