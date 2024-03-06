@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProfileScreen = () => {
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
@@ -32,7 +33,11 @@ const ProfileScreen = () => {
       {/* Menu */}
       <View style={styles.menu}>
         <TouchableOpacity style={styles.menuItem}>
-          <Icon name="person-outline" size={24} color="#333" />
+          <Icon name="people-outline" size={24} color="#333" />
+          <Text style={styles.menuText}>All Friends</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Icon1 name="account-edit" size={24} color="#333" />
           <Text style={styles.menuText}>Update Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
