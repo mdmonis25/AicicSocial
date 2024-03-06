@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
 import ChatScreen from '../screens/ChatScreen';
 import Message from '../screens/Message';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,13 @@ const MainNavigator = () => {
         <Stack.Screen
         name="ChatScreen"
         component={ChatScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+        <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
         options={{
           headerShown: false,
         }}
