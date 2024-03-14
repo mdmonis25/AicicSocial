@@ -65,40 +65,6 @@ const HomeScreen = () => {
     }
   };
 
-  // const handleLikePress = async (postId) => {
-  //   try {
-  //     const postToUpdate = posts.find(post => post.id === postId);
-  //     const isLiked = postToUpdate.is_like === 1;
-
-  //     if (isLiked) {
-  //       // If already liked, do nothing
-  //       return;
-  //     }
-
-  //     //const route = isLiked ? 'unlike_post' : 'like_post';
-
-  //     const response = await socialApi.post('', {
-  //       route: route,
-  //       post_id: 2,
-  //       user_id: 2,
-  //     });
-
-  //     if (response.data.success) {
-  //       console.log('Post action performed successfully');
-  //       const updatedPosts = posts.map(post => {
-  //         if (post.id === 2) {
-  //           return { ...post, is_like: isLiked ? 0 : 1 };
-  //         }
-  //         return post;
-  //       });
-  //       setPosts(updatedPosts);
-  //     } else {
-  //       console.error('Error performing action on post:', response.data.error);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error performing action on post:', error);
-  //   }
-  // };
 
   const postComment = async () => {
     try {
@@ -173,8 +139,7 @@ const HomeScreen = () => {
       />
       <View style={styles.interactionButtons}>
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
-          {/* <Icon name="thumbs-up" size={24} color={item.is_like == 1 ? "green" : "red"} /> */}
-          <Icon name={item.is_like == 1 ? "thumbs-up" : "thumbs-up-outline"} size={24}  />
+          {item.is_like == 1 ? <Icon name={ "thumbs-up"} size={24} color={'#0047ab'}/> : <Icon name={ "thumbs-up-outline"} size={24} color={'black'}/>}
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {
           setModalVisible(true);
@@ -194,13 +159,13 @@ const HomeScreen = () => {
     <View style={[styles.container]}>
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
-          <Text style={styles.headerText}> Aicic Social Media </Text>
+          <Text style={styles.headerText}> Aicic Network </Text>
           <View style={styles.headerIcons}>
             <TouchableOpacity style={{ marginRight: 20 }} onPress={() => { navigation.navigate('SearchScreen') }}>
-              <Icon name="search" size={24} color="black" />
+              <Icon name="search" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { navigation.navigate('ChatScreen') }}>
-              <Icon name="add-circle-outline" size={24} color="black" />
+            <TouchableOpacity style={{ marginRight: 10, marginBottom: 10 }} onPress={() => { navigation.navigate('ChatScreen') }}>
+              <Icon name="chatbox" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -229,7 +194,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EFF3FC',
+    backgroundColor: '#fff',
     marginTop: 0,
   },
   postImage: {
@@ -242,16 +207,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingHorizontal: 10,
+    paddingTop: 12,
+    backgroundColor: '#5843F6',
   },
   headerText: {
-    fontSize: 18,
-    color: '#7F27FF',
+    fontSize: 20,
+    color: '#fff',
     fontWeight: 'bold',
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+    backgroundColor: '#5843F6',
     borderRadius: 20,
-    padding: 10
+    padding: 5,
+    marginBottom: 12
   },
   headerIcons: {
     flexDirection: 'row',
@@ -261,12 +229,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   card: {
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
+    backgroundColor: '#ded8f0',
+    marginHorizontal: 10,
     marginBottom: 20,
     borderRadius: 10,
     padding: 15,
     shadowColor: '#000',
+    // color: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -288,7 +257,7 @@ const styles = StyleSheet.create({
   username: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#7F27FF',
+    color: '#000',
   },
   content: {
     marginTop: 10,
