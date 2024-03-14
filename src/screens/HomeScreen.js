@@ -14,7 +14,7 @@
 
 //   useEffect(() => {
 //     fetchData();
-//     console.log("This is state SearchScreeen wala:", authState)
+//     console.log("This is state SearchScreen wala:", authState)
 //   }, [authState]);
 
 //   const fetchData = async () => {
@@ -84,9 +84,35 @@
 //           <ScrollView>
 //             {/* Display comments here */}
 //             {/* Example: */}
-//             <Text>Comment 1</Text>
-//             <Text>Comment 2</Text>
-//             <Text>Comment 3</Text>
+//             <View style={styles.chatContainer}>
+//               <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+//               <View style={styles.chatContent}>
+//                 <Text style={styles.username}>Md Monis</Text>
+//                 <Text>Comment 1</Text>
+//               </View>
+//             </View>
+//             <View style={styles.chatContainer}>
+//               <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+//               <View style={styles.chatContent}>
+//                 <Text style={styles.username}>Ambarish Sharma</Text>
+//                 <Text>Comment 2</Text>
+//               </View>
+//             </View>
+//             <View style={styles.chatContainer}>
+//               <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+//               <View style={styles.chatContent}>
+//                 <Text style={styles.username}>Shivam Gupta</Text>
+//                 <Text>Comment 1</Text>
+//               </View>
+//             </View>
+//             <View style={styles.chatContainer}>
+//               {/* <Image source={{ uri: "../../assets/images/users/35.jpeg" }} style={styles.avatar} /> */}
+//               <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
+//               <View style={styles.chatContent}>
+//                 <Text style={styles.username}>Prabhat Kumar</Text>
+//                 <Text>Comment 2</Text>
+//               </View>
+//             </View>
 //             {/* Replace with actual comment data */}
 //           </ScrollView>
 //           <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
@@ -96,6 +122,7 @@
 //       </View>
 //     </Modal>
 //   );
+
 //   const renderPost = ({ item }) => (
 //     <View style={styles.card}>
 //       <View style={styles.userInfo}>
@@ -242,11 +269,19 @@
 //     top: 10,
 //     right: 10,
 //   },
+//   chatContainer: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     marginBottom: 10,
+//   },
+//   chatContent: {
+//     marginLeft: 10,
+//   },
 // });
 
 // export default HomeScreen;
 
-import { Button, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../App';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -257,8 +292,11 @@ import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
   const { authState, authDispatch } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [commentText, setCommentText] = useState('');
+  const [postId, setPostId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -270,10 +308,11 @@ const HomeScreen = () => {
       const response = await socialApi.post('', {
         route: 'timeline',
         user_id: 2
-      })
+      });
       if (response.data.result === 1) {
         console.log('API response:', response.data.posts);
         setPosts(response.data.posts);
+        setComments(response.data.comments);
       } else {
         console.error('API returned an error:', response.data.error);
       }
@@ -318,6 +357,26 @@ const HomeScreen = () => {
     }
   };
 
+  const postComment = async () => {
+    try {
+      const response = await socialApi.post('', {
+        route: 'create_comment',
+        post_id: postId,
+        user_id: authState.user_id,
+        comment_text: commentText,
+      });
+      if (response.data.success) {
+        console.log('Comment posted successfully');
+        fetchData(); // Refresh data after posting comment
+        setCommentText(''); // Clear comment input field
+      } else {
+        console.error('Error posting comment:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
+  };
+
   const renderCommentModal = () => (
     <Modal
       animationType="slide"
@@ -329,40 +388,17 @@ const HomeScreen = () => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <ScrollView>
-            {/* Display comments here */}
-            {/* Example: */}
-            <View style={styles.chatContainer}>
-              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
-              <View style={styles.chatContent}>
-                <Text style={styles.username}>Md Monis</Text>
-                <Text>Comment 1</Text>
+          {/* <ScrollView>
+            {comments.map(comment => (
+              <View key={comment.id} style={styles.chatContainer}>
+                <Image source={{ uri: comment.user_avatar }} style={styles.avatar} />
+                <View style={styles.chatContent}>
+                  <Text style={styles.username}>{comment.user_name}</Text>
+                  <Text>{comment.comment_text}</Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.chatContainer}>
-              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
-              <View style={styles.chatContent}>
-                <Text style={styles.username}>Ambarish Sharma</Text>
-                <Text>Comment 2</Text>
-              </View>
-            </View>
-            <View style={styles.chatContainer}>
-              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
-              <View style={styles.chatContent}>
-                <Text style={styles.username}>Shivam Gupta</Text>
-                <Text>Comment 1</Text>
-              </View>
-            </View>
-            <View style={styles.chatContainer}>
-              {/* <Image source={{ uri: "../../assets/images/users/35.jpeg" }} style={styles.avatar} /> */}
-              <Image source={require('../../assets/images/users/35.jpeg')} style={styles.avatar} />
-              <View style={styles.chatContent}>
-                <Text style={styles.username}>Prabhat Kumar</Text>
-                <Text>Comment 2</Text>
-              </View>
-            </View>
-            {/* Replace with actual comment data */}
-          </ScrollView>
+            ))}
+          </ScrollView> */}
           <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
             <Icon name="close-circle-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -387,7 +423,10 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
           <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "red" : "black"} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+          setModalVisible(true);
+          setPostId(item.id); // Set the post ID for which comments are being viewed
+        }}>
           <Icon name="chatbox-outline" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -403,7 +442,7 @@ const HomeScreen = () => {
         <View style={styles.header}>
           <Text style={styles.headerText}> Aicic Social Media </Text>
           <View style={styles.headerIcons}>
-            <TouchableOpacity style={{ marginRight: 20 }} onPress={()=>{navigation.navigate('SearchScreen')}}>
+            <TouchableOpacity style={{ marginRight: 20 }} onPress={() => { navigation.navigate('SearchScreen') }}>
               <Icon name="search" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { navigation.navigate('ChatScreen') }}>
@@ -418,6 +457,16 @@ const HomeScreen = () => {
           style={styles.feed}
         />
         {renderCommentModal()}
+      </View>
+      {/* Input field for posting comments */}
+      <View style={styles.commentInputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Write a comment..."
+          onChangeText={text => setCommentText(text)}
+          value={commentText}
+        />
+        <Button title="Post Comment" onPress={postComment} />
       </View>
     </View>
   );
@@ -524,6 +573,24 @@ const styles = StyleSheet.create({
   },
   chatContent: {
     marginLeft: 10,
+  },
+  commentInputContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginRight: 10,
   },
 });
 
