@@ -48,7 +48,7 @@ const HomeScreen = () => {
       });
 
       if (response.data.success) {
-        console.log('Post liked/unliked successfully');
+        console.log('Post liked successfully');
         // Update posts state to reflect the change in like status
         const updatedPosts = posts.map(post => {
           if (post.id === postId) {
@@ -142,6 +142,15 @@ const HomeScreen = () => {
               </View>
             ))}
           </ScrollView> */}
+          <View style={styles.commentInputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Write a comment..."
+          onChangeText={text => setCommentText(text)}
+          value={commentText}
+        />
+        <Button title="Post Comment" onPress={postComment} />
+      </View>
           <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
             <Icon name="close-circle-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -164,7 +173,8 @@ const HomeScreen = () => {
       />
       <View style={styles.interactionButtons}>
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
-          <Icon name="thumbs-up" size={24} color={item.is_like === 1 ? "red" : "black"} />
+          {/* <Icon name="thumbs-up" size={24} color={item.is_like == 1 ? "green" : "red"} /> */}
+          <Icon name={item.is_like == 1 ? "thumbs-up" : "thumbs-up-outline"} size={24}  />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {
           setModalVisible(true);
@@ -172,6 +182,7 @@ const HomeScreen = () => {
         }}>
           <Icon name="chatbox-outline" size={24} color="black" />
         </TouchableOpacity>
+        
         <TouchableOpacity style={styles.button}>
           <Icon name="share-outline" size={24} color="black" />
         </TouchableOpacity>
@@ -202,7 +213,7 @@ const HomeScreen = () => {
         {renderCommentModal()}
       </View>
       {/* Input field for posting comments */}
-      <View style={styles.commentInputContainer}>
+      {/* <View style={styles.commentInputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Write a comment..."
@@ -210,7 +221,7 @@ const HomeScreen = () => {
           value={commentText}
         />
         <Button title="Post Comment" onPress={postComment} />
-      </View>
+      </View> */}
     </View>
   );
 };
