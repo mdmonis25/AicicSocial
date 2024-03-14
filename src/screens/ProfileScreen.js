@@ -36,7 +36,7 @@ const ProfileScreen = () => {
           <Icon name="people-outline" size={24} color="#333" />
           <Text style={styles.menuText}>All Friends</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem} onPress={()=>{navigation.navigate('UpdateProfileScreen')}}>
           <Icon1 name="account-edit" size={24} color="#333" />
           <Text style={styles.menuText}>Update Profile</Text>
         </TouchableOpacity>
