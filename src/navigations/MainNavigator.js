@@ -4,7 +4,7 @@ import AddPost from '../screens/AddPost';
 import { AuthContext } from '../../App';
 import Login from '../screens/auth/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import ProfileScreen from '../screens/profile/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import Root from './BottomTabNavigator';
 import SignUp from '../screens/auth/SignUpScreen';
 import { StatusBar } from 'react-native';
@@ -14,6 +14,7 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import ChatScreen from '../screens/ChatScreen';
 import Message from '../screens/Message';
 import SearchScreen from '../screens/SearchScreen';
+import UpdateProfileScreen from '../screens/UpdateProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,13 @@ const MainNavigator = () => {
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateProfileScreen"
+        component={UpdateProfileScreen}
         options={{
           headerShown: false,
         }}
