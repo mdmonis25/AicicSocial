@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const UpdateProfileScreen = () => {
-  const [name, setName] = useState("Md Monis");
+  const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bio, setBio] = useState("");
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
@@ -19,6 +19,27 @@ const UpdateProfileScreen = () => {
   };
 
   const handleSaveChanges = () => {
+    const handleSaveChanges = async () => {
+      try {
+        const response = await socialApi.post('', {
+          route: 'profile',
+          fullname: name,
+          mobile: mobile,
+          bio: bio
+        });
+  
+        if (response.data.result === 1) {
+          console.log('Profile updated successfully');
+          Alert.alert('Profile updated successfully');
+        } else {
+          console.error('Unable to update profile:', response.data.msg);
+          Alert.alert('Unable to update profile:', response.data.msg);
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        Alert.alert('Error updating profile:', error.message);
+      }
+    };
     setIsModalVisible(true);
   };
 
@@ -214,3 +235,4 @@ const styles = StyleSheet.create({
 });
 
 export default UpdateProfileScreen;
+
