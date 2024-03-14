@@ -47,6 +47,7 @@ const UpdateProfileScreen = () => {
     try {
       const response = await socialApi.post('', {
         route: 'profile',
+        user_id: 1,
         fullname: name,
         mobile: phoneNumber, // Changed variable name from mobile to phoneNumber
         bio: bio
