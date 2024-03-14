@@ -1,0 +1,45 @@
+if ($route == "create_comment") {
+    // Check if required fields are provided
+    $required_fields = ['post_id', 'user_id', 'comment_text'];
+    foreach ($required_fields as $field) {
+        if (!isset($json_data[$field]) || empty($json_data[$field])) {
+            echo "Missing required field: $field";
+            exit();
+        }
+    }
+    extract($json_data);
+
+    // Check if the post exists
+    $post_exists = PDO_FetchOne("SELECT COUNT(*) FROM posts WHERE post_id = ?", [$post_id]);
+    if (!$post_exists) {
+        echo "Post does not exist";
+        exit();
+    }
+
+    // Check if the user exists
+    $user_exists = PDO_FetchOne("SELECT COUNT(*) FROM users WHERE user_id = ?", [$user_id]);
+    if (!$user_exists) {
+        echo "User does not exist";
+        exit();
+    }
+
+    // Insert comment into the database
+    $inserted = PDO_Execute("INSERT INTO comments (post_id, user_id, comment_text) VALUES (?, ?, ?)", [$post_id, $user_id, $comment_text]);
+
+    //if ($inserted) {
+       // echo "Comment created successfully";
+  //  } else {
+    //    echo "Failed to create comment";
+   // }
+	if ($inserted) {
+        // Display confirmation message
+        echo "Comment created successfully";
+
+        // If you want to display the comment content, you can fetch it from the database
+        $user_id = PDO_LastInsertId(); // Assuming your PDO driver has this method
+        $comment_content = PDO_FetchOne("SELECT comment_text FROM comments WHERE user_id = ?", [$user_id]);
+        echo "Comment content: $comment_content";
+    } else {
+        echo "Failed to create comment";
+    }
+}
