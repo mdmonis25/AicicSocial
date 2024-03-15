@@ -8,7 +8,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 import Root from './BottomTabNavigator';
 import SignUp from '../screens/auth/SignUpScreen';
 import { StatusBar } from 'react-native';
-import TripDetails from '../screens/TripDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
 import ChatScreen from '../screens/ChatScreen';
@@ -84,20 +83,6 @@ const MainNavigator = () => {
         component={ProfileScreen}
         options={{
           headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="TripDetails"
-        component={TripDetails}
-        options={{
-          headerShown: false,
-          useNativeDriver: true,
-          gestureEnabled: false,
-          cardStyleInterpolator: ({ current: { progress } }) => ({
-            cardStyle: {
-              opacity: progress,
-            },
-          }),
         }}
       />
     </Stack.Navigator>
