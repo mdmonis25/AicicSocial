@@ -14,6 +14,7 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [postId, setPostId] = useState(null);
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     fetchData();
@@ -64,6 +65,12 @@ const HomeScreen = () => {
       console.error('Error liking/unliking post:', error);
     }
   };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+    setRefreshing(false);
+  }
 
 
   const postComment = async () => {
@@ -174,6 +181,8 @@ const HomeScreen = () => {
           renderItem={renderPost}
           keyExtractor={(item) => item.id.toString()}
           style={styles.feed}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
         />
         {renderCommentModal()}
       </View>
