@@ -235,7 +235,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     shadowColor: '#000',
-    // color: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
