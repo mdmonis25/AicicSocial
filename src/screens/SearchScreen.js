@@ -1,21 +1,32 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, Image,TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Assuming you're using Ionicons for the back icon
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 const SearchScreen = () => {
-  const navigaton = useNavigation();
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [dummyData, setDummyData] = useState([
-    { id: '1', name: 'John Doe', image: require('../../assets/images/users/32.jpeg') },
-    { id: '2', name: 'Jane Smith', image: require('../../assets/images/users/32.jpeg') },
-    { id: '3', name: 'Alice Johnson', image: require('../../assets/images/users/35.jpeg') },
-    // Add more dummy data as needed
-  ]);
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://guflu.in/Social_media/smedia_api.php?route=search&query=${encodeURIComponent(searchQuery)}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    if (searchQuery !== '') {
+      fetchData();
+    }
+  }, [searchQuery]);
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-      <Image source={item.image} style={styles.userImage} />
+      <Image source={{ uri: item.image }} style={styles.userImage} />
       <Text style={styles.userName}>{item.name}</Text>
     </View>
   );
@@ -23,7 +34,7 @@ const SearchScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={()=>{navigaton.goBack()}}>
+        <TouchableOpacity style={styles.backButton} onPress={() => { navigation.goBack() }}>
           <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <Text style={styles.title}>Search Users</Text>
@@ -35,7 +46,7 @@ const SearchScreen = () => {
         onChangeText={setSearchQuery}
       />
       <FlatList
-        data={dummyData}
+        data={userData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
     backgroundColor: '#fff',
-    color:'#000'
+    color: '#000'
   },
   card: {
     backgroundColor: '#fff',
