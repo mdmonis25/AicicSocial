@@ -37,10 +37,17 @@ export const AuthReducer = async (state, action) => {
         // userData: action.payload,
       };
       case "LOG_OUT":
-        await AsyncStorage.removeItem("userData");
+        await AsyncStorage.clear();
         return {
-          ...userData, // Reset state to initial values
+          // ...userData, // Reset state to initial values
           isSignout: true,
+          token: "",
+          name: "",
+          mobile: "",
+          email: "",
+          password: "",
+          address: "",
+          uid: "",
         };
       
     case "PROFILE_UPDATE":
@@ -64,7 +71,7 @@ const App = () => {
     <AuthContext.Provider value={{ authState:state, authDispatch:dispatch }}>
       <NavigationContainer>
          { 
-           state.isSignout ? <AuthNavigator /> : <MainNavigator />
+           state._j==null  ? <AuthNavigator /> : <MainNavigator />
           //{state._j==null ? <AuthNavigator /> : <MainNavigator />}
          }
       </NavigationContainer>
