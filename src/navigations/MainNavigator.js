@@ -14,6 +14,7 @@ import ChatScreen from '../screens/ChatScreen';
 import Message from '../screens/Message';
 import SearchScreen from '../screens/SearchScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
+import PostDetails from '../screens/PostDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,13 @@ const MainNavigator = () => {
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PostDetails"
+        component={PostDetails}
         options={{
           headerShown: false,
         }}
