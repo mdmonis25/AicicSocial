@@ -116,14 +116,14 @@ const HomeScreen = () => {
             ))}
           </ScrollView> */}
           <View style={styles.commentInputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Write a comment..."
-          onChangeText={text => setCommentText(text)}
-          value={commentText}
-        />
-        <Button title="Post Comment" onPress={postComment} />
-      </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Write a comment..."
+              onChangeText={text => setCommentText(text)}
+              value={commentText}
+            />
+            <Button title="Post Comment" onPress={postComment} />
+          </View>
           <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
             <Icon name="close-circle-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -134,10 +134,12 @@ const HomeScreen = () => {
 
   const renderPost = ({ item }) => (
     <View style={styles.card}>
-      <View style={styles.userInfo}>
-        <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
-        <Text style={styles.username}>{item.user_name}</Text>
-      </View>
+        <View style={styles.userInfo}>
+      <TouchableOpacity onPress={()=>{navigation.navigate('PostDetails',{imageUrl:`https://guflu.in/Social_media/upload/${item.image_url}`})}}>
+          <Image source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }} style={styles.avatar} />
+      </TouchableOpacity>
+          <Text style={styles.username}>{item.user_name}</Text>
+        </View>
       <Text style={styles.content}>{item.caption}</Text>
       <Image
         source={{ uri: `https://guflu.in/Social_media/upload/${item.image_url}` }}
@@ -146,7 +148,7 @@ const HomeScreen = () => {
       />
       <View style={styles.interactionButtons}>
         <TouchableOpacity style={styles.button} onPress={() => handleLikePress(item.id)}>
-          {item.is_like == 1 ? <Icon name={ "thumbs-up"} size={24} color={'#0047ab'}/> : <Icon name={ "thumbs-up-outline"} size={24} color={'black'}/>}
+          {item.is_like == 1 ? <Icon name={"thumbs-up"} size={24} color={'#0047ab'} /> : <Icon name={"thumbs-up-outline"} size={24} color={'black'} />}
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {
           setModalVisible(true);
@@ -154,7 +156,7 @@ const HomeScreen = () => {
         }}>
           <Icon name="chatbox-outline" size={24} color="black" />
         </TouchableOpacity>
-        
+
         <TouchableOpacity style={styles.button}>
           <Icon name="share-outline" size={24} color="black" />
         </TouchableOpacity>
